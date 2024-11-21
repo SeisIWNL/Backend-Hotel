@@ -59,7 +59,7 @@ CREATE TABLE habitaciones (
 
 CREATE TABLE reservas (
                           id_reserva SERIAL PRIMARY KEY,
-                          fecha_entrega TIMESTAMP NOT NULL,
+                          fecha_entrada TIMESTAMP NOT NULL,
                           fecha_salida TIMESTAMP NOT NULL,
                           cantidad_huespedes INTEGER NOT NULL,
                           precio_total DECIMAL(10, 2) NOT NULL,
