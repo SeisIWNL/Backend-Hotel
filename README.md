@@ -17,6 +17,7 @@ Lo siguiente es una lista de endpoints disponibles y recursos necesarios para co
 | Registrar usuario        | POST   | `/usuarios/crear`  |
 | Validar OTP y guardar    | POST   | `/validar-otp`     |
 | Login usuario            | POST   | `/auth/login`      |
+| Registrar Reserva        | POST   | `/reservas/crear`      |
 
 ---
 
@@ -97,5 +98,27 @@ Lo siguiente es una lista de endpoints disponibles y recursos necesarios para co
         }
     }
     ```
+### 2. RESERVA 
 
+- **Registrar usuario**
+  - **Request URL:** `POST /reservas/crear`
+  - **Obligatorio Authentication: Bearer Token del Usuario**
+  - **Descripción:** Este endpoint permite registrar una reserva y generar un codigo QR como identificacion del huesped.
+  - **Request Body:**
+    ```json
+    {
+        "fechaEntrada": "2024-11-28T22:03:00",
+        "fechaSalida": "2024-11-29T21:10:00",
+        "cantidadHuespedes": "4",
+        "habitacion": 3,
+        "sede": 1
+    }
+    ```
+  - **Response:**
+    ```json
+    {
+        "message": "Reserva creada con éxito",
+        "data": "https://imageneshoteleria.blob.core.windows.net/imagenes-usuarios/codQR_2024-11-28T13%3A34%3A11.305075100_R911440.png"
+    }
+    ```
 ---
