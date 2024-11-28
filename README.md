@@ -100,7 +100,7 @@ Lo siguiente es una lista de endpoints disponibles y recursos necesarios para co
     ```
 ### 2. RESERVA 
 
-- **Registrar usuario**
+- **Registrar reserva**
   - **Request URL:** `POST /reservas/crear`
   - **Obligatorio Authentication: Bearer Token del Usuario**
   - **Descripción:** Este endpoint permite registrar una reserva y generar un codigo QR como identificacion del huesped.
