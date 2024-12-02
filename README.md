@@ -15,7 +15,7 @@ Lo siguiente es una lista de endpoints disponibles y recursos necesarios para co
 | Funcionalidad            | Método | Endpoint           |
 |--------------------------|--------|--------------------|
 | Registrar usuario        | POST   | `/usuarios/crear`  |
-| Validar OTP y guardar    | POST   | `/validar-otp`     |
+| Validar OTP y guardar    | POST   | `/usuarios/validar-otp`     |
 | Login usuario            | POST   | `/auth/login`      |
 | Registrar Reserva        | POST   | `/reservas/crear`      |
 
@@ -57,7 +57,7 @@ Lo siguiente es una lista de endpoints disponibles y recursos necesarios para co
     ```
 
 - **Validar Otp y Guardar Usuario**
-  - **Request URL:** `POST /validar-otp`
+  - **Request URL:** `POST /usuarios/validar-otp`
   - **Descripción:** Este endpoint valida el OTP enviado por correo y crea el usuario permanentemente en el sistema.
   - **Request Body:**
     ```json
