@@ -18,7 +18,9 @@ Lo siguiente es una lista de endpoints disponibles y recursos necesarios para co
 | Validar OTP y guardar    | POST   | `/usuarios/validar-otp`     |
 | Login usuario            | POST   | `/auth/login`      |
 | Registrar Reserva        | POST   | `/reservas/crear`      |
-| Filtrar Habitaciones     | GET    | `/habitaciones//sede/{idSede}/buscar`      |
+| Filtrar sedes por nombre de ciudad y fechas    | GET    | `/sedes/filtrar/fecha-nombre`|
+| Filtrar sedes por nombre de ciudad y fecha con horas    | GET    | `/sedes/filtrar/fecha-hora-nombre`|
+| Filtrar Habitaciones por nombre    | GET    | `/habitaciones/sede/{idSede}/buscar-nombre`|
 
 ---
 
@@ -95,48 +97,97 @@ Lo siguiente es una lista de endpoints disponibles y recursos necesarios para co
     }
     ```
 
-### 3. Habitaciones 
+### 3. Sedes 
 
-- **Buscar Habitaciones por Filtros**
-  - **Request URL:** `GET /habitaciones/sede/{idSede}/buscar`
-  - **Descripción:** Este endpoint permite filtrar habitaciones por tipo de cama, tipo de habitacion, precio minimo, precio maximo, nombre de la habitacion y habitaciones no reservadas por fecha de entrada y fecha de salida.
+- **Buscar Sedes por Filtros**
+  - **Request URL:** `GET /sedes/filtrar/fecha-nombre`
+  - **Descripción:** Este endpoint permite filtrar Sedes por Ciudad de la Sede y Fechas de Entrada y Salida donde se mostrara una lista de Sedes que no tengan habitaciones ocupadas en esas fechas.
     ### Parámetros de Consulta
 
     | Parámetro | Tipo | Descripción | Ejemplo |
     |-----------|------|-------------|---------|
-    | `tipoCama` | String | Nombre del Tipo de Cama | `indi` |
-    | `tipoHabitacion` | String | Nombre del Tipo de Habitacion | `indi` |
-    | `minPrecio` | BigDecimal | Precio Minimo | `100` |
-    | `maxPrecio` | BigDecimal | Precio Maximo | `150` |
-    | `fechaEntrada` | Datetime | Fecha de entrada | `2024-11-28T22:03:00` |
-    | `fechaSalida` | Datetime | Fecha de salida | `2024-11-29T21:10:00` |
-    | `nombreHabitacion` | String | Nombre de la Habitacion | `estan` |
+    | `fechaEntrada` | LocalDate | Fecha de entrada | `2024-12-30` |
+    | `fechaSalida` | LocalDate | Fecha de salida | `2024-12-31` |
+    | `nombreCiudad` | String | Nombre de la Ciudad | `iqui` |
+  - **Response:**
+    ```json
+    {
+        "message": "Sede encontradas",
+        "data": [
+            {
+                "id": 2,
+                "nombre": "Hotel Sol",
+                "ciudad": "Cusco",
+                "pais": "Perú",
+                "direccion": "Calle del Sol 456",
+                "estado": "DISPONIBLE"
+            }
+        ]
+    }
+    ```
+
+- **Buscar Sedes por Filtros 2**
+  - **Request URL:** `GET /sedes/filtrar/fecha-hora-nombre`
+  - **Descripción:** Este endpoint permite filtrar Sedes por Ciudad de la Sede y Fechas de Entrada y Salida donde se mostrara una lista de Sedes que no tengan habitaciones ocupadas en esas fechas.
+    ### Parámetros de Consulta
+
+    | Parámetro | Tipo | Descripción | Ejemplo |
+    |-----------|------|-------------|---------|
+    | `fechaEntrada` | LocalDateTime | Fecha de entrada | `2024-12-30T22:03:00` |
+    | `fechaSalida` | LocalDateTime | Fecha de salida | `2024-12-31T21:10:00` |
+    | `nombreCiudad` | String | Nombre de la Ciudad | `cusco` |
+  - **Response:**
+    ```json
+    {
+        "message": "Sede encontradas",
+        "data": [
+            {
+                "id": 2,
+                "nombre": "Hotel Sol",
+                "ciudad": "Cusco",
+                "pais": "Perú",
+                "direccion": "Calle del Sol 456",
+                "estado": "DISPONIBLE"
+            }
+        ]
+    }
+    ```
+
+### 4. Habitaciones 
+- **Buscar Habitaciones por Filtros**
+  - **Request URL:** `GET /habitaciones/sede/{idSede}/buscar-nombre`
+  - **Descripción:** Este endpoint permite filtrar habitaciones por el nombre de habitaciones.
+    ### Parámetros de Consulta
+
+    | Parámetro | Tipo | Descripción | Ejemplo |
+    |-----------|------|-------------|---------|
+    | `nombreHabitacion` | String | Nombre de la Habitacion | `paraiso` |
   - **Response:**
     ```json
     {
         "message": "Habitaciones encontradas",
         "data": [
             {
-                "id": 5,
-                "nombre": "Estándar Pacífico",
-                "precioNoche": 120.00,
-                "capacidadMax": 1,
+                "id": 9,
+                "nombre": "Villa Paraíso",
+                "precioNoche": 600.00,
+                "capacidadMax": 6,
                 "estado": "DISPONIBLE",
-                "imagenUrl": "estandar_pacifico.jpg",
+                "imagenUrl": "villa_paraiso.jpg",
                 "tipoCama": {
-                    "id": 1,
-                    "nombre": "Individual",
-                    "descripcion": "Cama de tamaño estándar para una persona, ideal para habitaciones individuales o compartidas."
+                    "id": 5,
+                    "nombre": "Super King Size",
+                    "descripcion": "Cama de lujo con dimensiones superiores, proporcionando la máxima comodidad y amplitud."
                 },
                 "tipoHabitacion": {
-                    "id": 1,
-                    "nombre": "Individual",
-                    "descripcion": "Habitación diseñada para una persona, equipada con una cama individual y todas las comodidades básicas, ideal para viajes en solitario."
+                    "id": 8,
+                    "nombre": "Junior Suite",
+                    "descripcion": "Habitación espaciosa con un área de descanso adicional, perfecta para quienes buscan comodidad extra."
                 },
                 "sede": {
                     "id": 1,
                     "nombre": "Hotel Centro",
-                    "ciudad": "Lima",
+                    "ciudad": "Cusco",
                     "pais": "Perú",
                     "direccion": "Av. Central 123",
                     "estado": "DISPONIBLE"
@@ -145,7 +196,8 @@ Lo siguiente es una lista de endpoints disponibles y recursos necesarios para co
         ]
     }
     ```
-### 4. RESERVA 
+
+### 5. RESERVA 
 
 - **Registrar reserva**
   - **Request URL:** `POST /reservas/crear`
